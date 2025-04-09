@@ -7,7 +7,7 @@ function view_single()
                 "Simulation: {{id}}"
             ),
             h3(class="st-header__title text-h3",
-                "Status: {{status}}"
+                "Name: {{name}}"
             ),
             p([
                 btn("List", class="q-mr-sm", @click(:listButton))

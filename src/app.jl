@@ -6,6 +6,7 @@ using GenieFramework
 
 const APP_NAME = "An example GenieFramework project"
 
+include("users/Users.jl")
 include("simulations/Simulations.jl")
 
 route("/") do

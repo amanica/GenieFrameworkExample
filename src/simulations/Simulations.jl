@@ -6,7 +6,7 @@ Pros:
   * Switch fast between modes without reload
 
 Cons:
-  * loads all view into the browser with all data
+  * Loads all views into the browser with all the data
 """
 module Simulations
 
@@ -48,7 +48,7 @@ simulations=Dict{Int, SimulationStatus}
     @onbutton runButton begin
         @info "runButton"
 
-        id = rand(Int)
+        id = rand(Int8)
         status = RUNNING
         viewMode = VIEW
 

@@ -1,15 +1,13 @@
 
-function view_single()
+function view_new()
     [
         header(class="st-header q-pa-sm", [
             h1(APP_NAME),
             h2(class="st-header__title text-h3",
-                "Simulation: {{id}}"
-            ),
-            h3(class="st-header__title text-h3",
-                "Status: {{status}}"
+                "Add a new user"
             ),
             p([
+                btn("Add", class="q-mr-sm", @click(:addButton)),
                 btn("List", class="q-mr-sm", @click(:listButton))
             ])
         ])
