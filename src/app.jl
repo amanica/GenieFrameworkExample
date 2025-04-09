@@ -8,11 +8,8 @@ const APP_NAME = "An example GenieFramework project"
 
 include("simulations/Simulations.jl")
 
-# route("/") do
-#     serve_static_file("welcome.html")
-# end
 route("/") do
-    redirect(:get_simulations)
+    serve_static_file("index.html")
 end
 
 end
