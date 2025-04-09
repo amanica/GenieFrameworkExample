@@ -6,7 +6,9 @@ Pros:
     * Does not loads all views into the browser with all the data
 
 Cons:
-    * Switch slower between modes with reload
+    * Switch slower between modes with page reload causing a flicker
+    * I think there is an extra roundtrip when updating the model,
+      it seems it renders the page and then immediately updates it.
 """
 
 
@@ -25,39 +27,52 @@ Stipple.@kwdef mutable struct User
     name::AbstractString
 end
 
-users = Vector{User}()
+# Fake db
+users = Dict{Int, User}()
 
 @app begin
     @in newButton = false
     @in addButton = false
     @in listButton = false
     @out id::Union{Nothing, Int} = nothing
+    @in user::User = User(0, "")
 
     @onbutton listButton begin
         @info "listButton"
-        redirect(:get_users) # FIXME: this is not working :'(
+        @run raw"window.location.href = '/users'"
     end
 
     @onbutton newButton begin
         @info "newButton"
-        Stipple.redirect("/users/new") # FIXME: this is not working :'(
-        Stipple.redirect(:get_users_new) # FIXME: this is not working :'(
+        # redirect("/users/new") # this is not working :'(
+        # Stipple.redirect("/users/new") # this is not working :'(
+        # Stipple.redirect(:get_users_new) # this is not working :'(
+
+        @run raw"window.location.href = '/users/new'"
     end
 
     @onbutton addButton begin
         @info "addButton"
 
-        id = rand(Int8)
+        newid = rand(Int8)
         name = rand(["Reuben", "Simeon", "Levi", "Judah", "Dan", "Naphtali", "Gad", "Asher", "Issachar", "Zebulun", "Joseph", "Benjamin", "Simon", "Andrew", "James", "John", "Philip", "Bartholomew", "Thomas", "Matthew", "Thaddaeus", "Matthias"])
-        user = User(id, name)
+        user = User(newid, name)
         @info "adding $user"
-        push!(users, user)
-        redirect(:get_users_single) # FIXME: this is not working :'(
+        users[newid] = user
+        id = newid
+        @run """window.location.href = '/users/$id'"""
+    end
+
+    @onchange id begin
+        @info "id changed to $id"
+        if !isnothing(id)
+            user = users[id]
+        end
     end
 end
 
 @page("/users", view_list)
 @page("/users/new", view_new)
-@page("/users/single", view_single)
+@page("/users/:id::Int#([0-9\\-]+)", view_single)
 
 end

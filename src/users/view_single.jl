@@ -1,13 +1,21 @@
 
 function view_single()
+
+    # needed to update the model if we are coming in from an url param
+    model = @init
+    paramid = params(:id)
+    if model.id[] != paramid
+        model.id[] = paramid
+    end
+
     [
         header(class="st-header q-pa-sm", [
             h1(APP_NAME),
             h2(class="st-header__title text-h3",
-                "Simulation: {{id}}"
+                "User: {{id}}"
             ),
             h3(class="st-header__title text-h3",
-                "Name: {{name}}"
+                "Name: {{user.name}}"
             ),
             p([
                 btn("List", class="q-mr-sm", @click(:listButton))

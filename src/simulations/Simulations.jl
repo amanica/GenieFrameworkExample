@@ -1,5 +1,6 @@
 """
 Example module that changes view mode using an enum.
+The run page also does some async action.
 (Just re-run in vscode repl if changes are not picked up)
 
 Pros:

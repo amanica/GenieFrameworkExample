@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Some examples of GenieFramework usage that took me a while to figure out
+Some examples of GenieFramework usage that took me a while to figure out.
 
 ## Setup
 
