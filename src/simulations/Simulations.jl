@@ -37,6 +37,10 @@ simulations=Dict{Int, SimulationStatus}
     @onbutton runButton runButtonClicked()
 end
 
+@created """
+console.log('This app has just been created!');
+"""
+
 include("view.jl")
 include("controller.jl") # Note: handlers need to be after @app
 
