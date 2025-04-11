@@ -38,7 +38,7 @@ simulations=Dict{Int, SimulationStatus}
 end
 
 include("view.jl")
-include("controller.jl")
+include("controller.jl") # Note: handlers need to be after @app
 
 @page("/simulations", view)
 

@@ -4,10 +4,14 @@
     viewMode = LIST
 end
 
-@handler function newButtonClicked()
+
+# I'm not sure much is gained by specifying the relevant
+# reactive variables, I'm guessing it will just do a tiny bit less work..
+@handler (:viewMode,) function newButtonClicked()
     @info "newButtonClicked"
     viewMode = NEW
 end
+
 
 @handler function runButtonClicked()
     @info "runButtonClicked"
