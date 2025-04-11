@@ -15,10 +15,6 @@ using ..GenieFrameworkExample # Only needed if you want to access project-wide g
 using GenieFramework, Stipple
 @genietools
 
-include("view_list.jl")
-include("view_new.jl")
-include("view_single.jl")
-
 @enum ViewMode begin
     LIST
     NEW
@@ -36,51 +32,14 @@ simulations=Dict{Int, SimulationStatus}
     @out id::Union{Nothing, Int} = nothing
     @out status::SimulationStatus = INIT
 
-    @onbutton listButton begin
-        @info "listButton"
-        viewMode = LIST
-    end
-
-    @onbutton newButton begin
-        @info "newButton"
-        viewMode = NEW
-    end
-
-    @onbutton runButton begin
-        @info "runButton"
-
-        id = rand(Int8)
-        status = RUNNING
-        viewMode = VIEW
-
-        @async begin
-            @info "Task started"
-
-            sleep(2)
-            status = rand([SUCCESS,FAIL])
-
-            simulations[id] = status
-            @info "Task ended"
-        end
-    end
+    @onbutton listButton listButtonClicked()
+    @onbutton newButton newButtonClicked()
+    @onbutton runButton runButtonClicked()
 end
 
-function ui()
-    [
-        # This loads everything onto the screen, but conditionally hides it
-        # span(view_single(), @showif(:viewMode == VIEW)),
-        # span(view_new(), @showif(:viewMode == NEW)),
-        # span(view_list(), @showif(:viewMode == LIST)),
+include("view.jl")
+include("controller.jl")
 
-        # this syntax is supposed to load lazily,
-        # but as far as I can tell everything is still loaded
-        # https://vuejs.org/guide/essentials/conditional.html#v-show
-        span(view_single(), @if(:viewMode == VIEW)),
-        span(view_new(), @elseif(:viewMode == NEW)),
-        span(view_list(), @else()),
-    ]
-end
-
-@page("/simulations", ui)
+@page("/simulations", view)
 
 end

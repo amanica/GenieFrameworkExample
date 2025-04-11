@@ -7,7 +7,7 @@ Pros:
 
 Cons:
     * Switch slower between modes with page reload causing a flicker
-    * I think there is an extra roundtrip when updating the model,
+    * I think there is an extra round-trip when updating the model,
       it seems it renders the page and then immediately updates it.
 """
 

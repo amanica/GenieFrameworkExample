@@ -1,9 +1,8 @@
-
 function view_single()
 
     # needed to update the model if we are coming in from an url param
-    model = @init
     paramid = params(:id)
+    model = @init
     if model.id[] != paramid
         model.id[] = paramid
     end
