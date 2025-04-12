@@ -12,7 +12,7 @@ Cons:
 """
 
 using ..GenieFrameworkExample # Only needed if you want to access project-wide globals
-using GenieFramework, Stipple, FilePathsBase
+using GenieFramework, Stipple
 @genietools
 @genietools
 
@@ -40,11 +40,12 @@ end
 
 @created """
 console.log('This app has just been created!');
+document.querySelector('.layout_root').hidden = false;
 """
 
 include("view.jl")
 include("controller.jl") # Note: handlers need to be after @app
 
-@page("/simulations", view, layout=p"layout.jl")
+@page("/simulations", view, layout=LAYOUT)
 
 end

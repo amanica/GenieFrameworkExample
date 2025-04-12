@@ -13,12 +13,8 @@ Cons:
 """
 
 using ..GenieFrameworkExample # Only needed if you want to access project-wide globals
-using GenieFramework, Stipple, FilePathsBase
+using GenieFramework, Stipple
 @genietools
-
-include("view_list.jl")
-include("view_new.jl")
-include("view_single.jl")
 
 Stipple.@kwdef mutable struct User
     id::Int
@@ -58,41 +54,27 @@ users = Dict{Int, User}()
     @onchange id begin
         @info "id changed to $id"
         if !isnothing(id)
+            if !haskey(users, id)
+                throw(Genie.Exceptions.NotFoundException("user id"))
+            end
             user = users[id]
         end
     end
 end
 
-# TODO: move to controller..
-function jsredirect(path)
-    return """window.location.href = '$path'"""
-end
+@created """
+console.log('This app has just been created!');
+document.querySelector('.layout_root').hidden = false;
+"""
 
-@handler function newButtonClicked()
-    @info "newButtonClicked"
-    # redirect("/users/new") # this is not working :'(
-    # Stipple.redirect("/users/new") # this is not working :'(
-    # Stipple.redirect(:get_users_new) # this is not working :'(
+include("view_list.jl")
+include("view_new.jl")
+include("view_single.jl")
+include("controller.jl")
 
-    @run jsredirect("/users/new")
-end
-
-function updateId()
-    @show paramid = params(:id)
-
-    # needed to update the model if we are coming in from an url param
-    model = @init
-    if model.id[] != paramid
-        model.id[] = paramid
-    end
-    return nothing
-end
-
-_layout=p"layout.jl"
-@page("/users", view_list, layout=_layout)
-@page("/users/new", view_new, layout=_layout)
-@page("/users/:id::Int#([0-9\\-]+)", view_single, pre=updateId, layout=_layout)
-# @page("/users/:id::Int#([0-9\\-]+)", p"users/view_single.jl", pre=updateId, layout=_layout)
-
+@page("/users", view_list, layout=LAYOUT)
+@page("/users/new", view_new, layout=LAYOUT)
+@page("/users/:id::Int#([0-9\\-]+)", view_single, post=updateIdFromUrl, layout=LAYOUT)
+# @page("/users/:id::Int#([0-9\\-]+)", p"users/view_single.jl", pre=updateId, layout=LAYOUT)
 
 end
