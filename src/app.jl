@@ -1,4 +1,5 @@
 module GenieFrameworkExample
+
 export APP_NAME
 
 using GenieFramework

@@ -1,4 +1,5 @@
-"""
+module Simulations
+const MODULE_INFO = """
 Example module that changes view mode using an enum.
 The run page also does some async action.
 (Just re-run in vscode repl if changes are not picked up)
@@ -9,10 +10,10 @@ Pros:
 Cons:
   * Loads all views into the browser with all the data
 """
-module Simulations
 
 using ..GenieFrameworkExample # Only needed if you want to access project-wide globals
-using GenieFramework, Stipple
+using GenieFramework, Stipple, FilePathsBase
+@genietools
 @genietools
 
 @enum ViewMode begin
@@ -44,6 +45,6 @@ console.log('This app has just been created!');
 include("view.jl")
 include("controller.jl") # Note: handlers need to be after @app
 
-@page("/simulations", view)
+@page("/simulations", view, layout=p"layout.jl")
 
 end

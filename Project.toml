@@ -1,3 +1,4 @@
 [deps]
+FilePathsBase = "48062228-2e41-5def-b9a4-89aafe57970f"
 GenieFramework = "a59fdf5c-6bf0-4f5d-949c-a137c9e2f353"
 Stipple = "4acbeb90-81a0-11ea-1966-bdaff8155998"

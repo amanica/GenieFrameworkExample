@@ -1,4 +1,5 @@
-"""
+module Users
+const MODULE_INFO = """
 Example module that changes view mode using re-directs.
 (Just re-run in vscode repl if changes are not picked up)
 
@@ -11,11 +12,8 @@ Cons:
       it seems it renders the page and then immediately updates it.
 """
 
-
-module Users
-
 using ..GenieFrameworkExample # Only needed if you want to access project-wide globals
-using GenieFramework, Stipple
+using GenieFramework, Stipple, FilePathsBase
 @genietools
 
 include("view_list.jl")
@@ -31,6 +29,7 @@ end
 users = Dict{Int, User}()
 
 @app begin
+    @out moduleInfo = MODULE_INFO
     @in newButton = false
     @in addButton = false
     @in listButton = false
@@ -42,14 +41,7 @@ users = Dict{Int, User}()
         @run raw"window.location.href = '/users'"
     end
 
-    @onbutton newButton begin
-        @info "newButton"
-        # redirect("/users/new") # this is not working :'(
-        # Stipple.redirect("/users/new") # this is not working :'(
-        # Stipple.redirect(:get_users_new) # this is not working :'(
-
-        @run raw"window.location.href = '/users/new'"
-    end
+    @onbutton newButton newButtonClicked()
 
     @onbutton addButton begin
         @info "addButton"
@@ -71,8 +63,36 @@ users = Dict{Int, User}()
     end
 end
 
-@page("/users", view_list)
-@page("/users/new", view_new)
-@page("/users/:id::Int#([0-9\\-]+)", view_single)
+# TODO: move to controller..
+function jsredirect(path)
+    return """window.location.href = '$path'"""
+end
+
+@handler function newButtonClicked()
+    @info "newButtonClicked"
+    # redirect("/users/new") # this is not working :'(
+    # Stipple.redirect("/users/new") # this is not working :'(
+    # Stipple.redirect(:get_users_new) # this is not working :'(
+
+    @run jsredirect("/users/new")
+end
+
+function updateId()
+    @show paramid = params(:id)
+
+    # needed to update the model if we are coming in from an url param
+    model = @init
+    if model.id[] != paramid
+        model.id[] = paramid
+    end
+    return nothing
+end
+
+_layout=p"layout.jl"
+@page("/users", view_list, layout=_layout)
+@page("/users/new", view_new, layout=_layout)
+@page("/users/:id::Int#([0-9\\-]+)", view_single, pre=updateId, layout=_layout)
+# @page("/users/:id::Int#([0-9\\-]+)", p"users/view_single.jl", pre=updateId, layout=_layout)
+
 
 end

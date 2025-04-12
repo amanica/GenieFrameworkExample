@@ -2,8 +2,8 @@
 function view_list()
     [
         header(class="st-header q-pa-sm", [
-            h1(APP_NAME),
-            p("Example module that changes view mode using redirects, but it is NOT working at the moment '( ."),
+            # pre(MODULE_INFO),
+            # p("view info: {{moduleInfo}}"),
             h2(class="st-header__title text-h3",
                 "Users:"
             ),
