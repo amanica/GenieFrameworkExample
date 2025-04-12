@@ -1,3 +1,4 @@
+include("../controller_common.jl")
 
 @handler function listButtonClicked()
     @info "listButtonClicked"

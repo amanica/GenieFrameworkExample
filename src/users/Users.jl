@@ -62,11 +62,6 @@ users = Dict{Int, User}()
     end
 end
 
-@created """
-console.log('This app has just been created!');
-document.querySelector('.layout_root').hidden = false;
-"""
-
 include("view_list.jl")
 include("view_new.jl")
 include("view_single.jl")
