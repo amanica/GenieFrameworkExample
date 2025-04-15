@@ -45,47 +45,16 @@ end
     @in addButton = false
     @in listButton = false
     @out id::Union{Nothing, Int} = nothing
-    @in user::User = User(0, "")
+    @out user::User = User(0, "")
 
     @out tableData = DataTable(usersAsDataFrame())
     @in tablefilter = ""
 
-    @onbutton listButton begin
-        @info "listButton"
-        @run raw"window.location.href = '/users'"
-    end
-
+    @onbutton listButton listButtonClicked()
     @onbutton newButton newButtonClicked()
+    @onbutton addButton addButtonClicked()
 
-    @onbutton addButton begin
-        @info "addButton"
-
-        newid = rand(Int8)
-        name = rand(["Reuben", "Simeon", "Levi", "Judah", "Dan", "Naphtali", "Gad", "Asher", "Issachar", "Zebulun", "Joseph", "Benjamin", "Simon", "Andrew", "James", "John", "Philip", "Bartholomew", "Thomas", "Matthew", "Thaddaeus", "Matthias"])
-        user = User(newid, name)
-        @info "adding $user"
-        users[newid] = user
-        id = newid
-        @run """window.location.href = '/users/$id'"""
-
-        tableData = DataTable(usersAsDataFrame())
-        # tableData.data = usersAsDataFrame()
-        # @push tableData
-        # I keep getting errors when using @push :'(
-#         exception =
-# │    MethodError: no method matching push!(::Main.GenieFrameworkExample.Users.var"Main.GenieFrameworkExample.Users_ReactiveModel!_1", ::StippleUI.Tables.DataTable{DataFrames.DataFrame})
-# │    The function `push!` exists, but no method is defined for this combination of argument types.
-    end
-
-    @onchange id begin
-        @info "id changed to $id"
-        if !isnothing(id)
-            if !haskey(users, id)
-                throw(Genie.Exceptions.NotFoundException("user id"))
-            end
-            user = users[id]
-        end
-    end
+    @onchange id idChanged()
 end
 
 include("view_list.jl")
