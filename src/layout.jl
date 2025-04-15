@@ -10,7 +10,7 @@ page(model, [
         partial = false,
 
         # try to avoid really weird rendering of content until page is loaded
-        # @if(:isready) did not seem to help
+        @if(:isready), #did not seem to help reduce the weird initialization
         hidden = true,
         class = "layout_root"
     )

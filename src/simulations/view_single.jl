@@ -2,9 +2,7 @@
 function view_single()
     [
         header(class="st-header q-pa-sm", [
-            h2(class="st-header__title text-h3",
-                "Simulation: {{id}}"
-            ),
+            heading("Simulation: {{id}}"),
             h3(class="st-header__title text-h3",
                 "Status: {{status}}"
             ),
