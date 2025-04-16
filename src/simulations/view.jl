@@ -9,6 +9,7 @@ function view()
         # span(view_single(), @showif(:viewMode == SINGLE)),
         # span(view_new(), @showif(:viewMode == NEW)),
         # span(view_list(), @showif(:viewMode == LIST)),
+        ################################################################################
 
         ################################################################################
         # this syntax is supposed to load lazily,
@@ -17,5 +18,6 @@ function view()
         span(view_single(), @if(:viewMode == SINGLE)),
         span(view_new(), @elseif(:viewMode == NEW)),
         span(view_list(), @else()),
+        ################################################################################
     ]
 end

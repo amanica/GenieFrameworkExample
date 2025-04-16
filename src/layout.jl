@@ -2,7 +2,7 @@
 # moduleInfo = :MODULE_INFO ∈ names(@__MODULE__; all=true) ? (@__MODULE__).MODULE_INFO : ""
 # moduleInfo = ""
 page(model, [
-            h1(APP_NAME),
+            h1(class="st-header q-pa-sm", APP_NAME),
             @yield,
             pre(MODULE_INFO)
         ];
