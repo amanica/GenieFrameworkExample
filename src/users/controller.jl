@@ -29,7 +29,7 @@ end
     id = newid
     @run """window.location.href = '/users/$id'"""
 
-    tableData = DataTable(usersAsDataFrame())
+
     # tableData.data = usersAsDataFrame()
     # @push tableData
     # I keep getting errors when using @push :'(
@@ -55,5 +55,10 @@ end
     if id != paramid
         id = paramid
     end
+    return nothing
+end
+
+@handler function updateTable()
+    tableData = DataTable(usersAsDataFrame())
     return nothing
 end

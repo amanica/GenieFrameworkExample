@@ -1,7 +1,7 @@
 module Users
 const MODULE_INFO = """
 Example module that changes view mode using re-directs.
-(Just re-run in vscode repl if changes are not picked up)
+(Just re-run the Users.jl module in vscode repl if changes are not picked up)
 
 Pros:
     * Does not loads all views into the browser with all the data
@@ -62,7 +62,7 @@ include("view_new.jl")
 include("view_single.jl")
 include("controller.jl")
 
-@page("/users", view_list, layout=LAYOUT)
+@page("/users", view_list, layout=LAYOUT, post=updateTable)
 @page("/users/new", view_new, layout=LAYOUT)
 @page("/users/:id::Int#([0-9\\-]+)", view_single, post=updateIdFromUrl, layout=LAYOUT)
 
