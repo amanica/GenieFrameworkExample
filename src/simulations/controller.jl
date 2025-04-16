@@ -5,6 +5,16 @@ include("../controller_common.jl")
     viewMode = LIST
 end
 
+@handler function viewModeChanged()
+    @info "viewModeChanged $viewMode"
+    if viewMode == LIST
+        @info "updating table.."
+        # tableData = DataTable(simulationsAsDataFrame())
+        tableData.data = simulationsAsDataFrame()
+        @async @push tableData
+    end
+end
+
 
 # I'm not sure much is gained by specifying the relevant
 # reactive variables, I'm guessing it will just do a tiny bit less work..
@@ -18,16 +28,22 @@ end
     @info "runButtonClicked"
 
     id = rand(Int8)
-    status = RUNNING
-    viewMode = VIEW
+    viewMode = SINGLE
+    simulation = Simulation(id, INIT)
+    simulations[id] = simulation
 
     @async begin
         @info "Task started"
+        sleep(2)
+
+        @info "Task running"
+        simulation.status = RUNNING
+        @async @push simulation
 
         sleep(2)
-        status = rand([SUCCESS,FAIL])
-
-        simulations[id] = status
+        @info "Task done"
+        @show simulation.status = rand([SUCCESS,FAIL])
+        @async @push simulation
         @info "Task ended"
     end
 end

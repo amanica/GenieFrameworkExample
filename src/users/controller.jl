@@ -28,14 +28,6 @@ end
     users[newid] = user
     id = newid
     @run """window.location.href = '/users/$id'"""
-
-
-    # tableData.data = usersAsDataFrame()
-    # @push tableData
-    # I keep getting errors when using @push :'(
-#         exception =
-# │    MethodError: no method matching push!(::Main.GenieFrameworkExample.Users.var"Main.GenieFrameworkExample.Users_ReactiveModel!_1", ::StippleUI.Tables.DataTable{DataFrames.DataFrame})
-# │    The function `push!` exists, but no method is defined for this combination of argument types.
 end
 
 @handler function idChanged()
@@ -55,10 +47,14 @@ end
     if id != paramid
         id = paramid
     end
+    # push again to make sure page updates:
+    @async @push id
     return nothing
 end
 
 @handler function updateTable()
-    tableData = DataTable(usersAsDataFrame())
+    # tableData = DataTable(usersAsDataFrame())
+    tableData.data = usersAsDataFrame()
+    @async @push tableData
     return nothing
 end

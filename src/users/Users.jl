@@ -35,7 +35,8 @@ function usersAsDataFrame()
         return DataFrame(data, [:id, :name])
     else
         # Create an empty DataFrame with predefined column names and types
-        return DataFrame()#(id = Int[], name = String[])
+        # return  DataFrame(id = Int[], name = String[])
+        return DataFrame()
     end
 end
 
