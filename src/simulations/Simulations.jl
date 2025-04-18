@@ -12,7 +12,7 @@ Cons:
 """
 
 using ..GenieFrameworkExample # Only needed if you want to access project-wide globals
-using GenieFramework, Stipple
+using GenieFramework, Stipple, FilePathsBase
 using DataFrames
 @genietools
 
@@ -59,9 +59,8 @@ end
     @onchange viewMode, simulation viewModeChanged()
 end
 
-include("view.jl")
 include("controller.jl") # Note: handlers need to be after @app
 
-@page("/simulations", view, layout=LAYOUT)
+@page("/simulations", p"simulations/view.jl", layout=LAYOUT)
 
 end
