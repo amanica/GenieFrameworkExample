@@ -1,4 +1,5 @@
-
+# the last statement is returned by the import so
+# this file returns a function that gets loaded by Genie
 function view_new()
     [
         header(class="st-header q-pa-sm", [

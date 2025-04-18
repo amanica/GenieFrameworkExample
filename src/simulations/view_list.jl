@@ -1,6 +1,14 @@
+# the last statement is returned by the import so
+# this file returns an array of html
+
+# sweet we can call functions now \o/
+function myheading(text)
+    return heading(text * " !")
+end
+
 [
     header(class="st-header q-pa-sm", [
-        heading("Simulations:"),
+        myheading("Simulations"),
         p([
             btn("New", class="q-mr-sm", @click(:newButton))
         ]),
