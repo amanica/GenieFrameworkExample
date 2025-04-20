@@ -17,7 +17,7 @@ Cons:
 """
 
 using ..GenieFrameworkExample # Only needed if you want to access project-wide globals
-using GenieFramework, Stipple
+using GenieFramework, Stipple, FilePathsBase
 using DataFrames
 @genietools
 
@@ -58,13 +58,10 @@ end
     @onchange id idChanged()
 end
 
-include("view_list.jl")
-include("view_new.jl")
-include("view_single.jl")
 include("controller.jl")
 
-@page("/users", view_list, layout=LAYOUT, post=updateTable)
-@page("/users/new", view_new, layout=LAYOUT)
-@page("/users/:id::Int#([0-9\\-]+)", view_single, post=updateIdFromUrl, layout=LAYOUT)
+@page("/users", p"users/view_list.jl", layout=LAYOUT, post=updateTable)
+@page("/users/new", p"users/view_new.jl", layout=LAYOUT)
+@page("/users/:id::Int#([0-9\\-]+)", p"users/view_single.jl", post=updateIdFromUrl, layout=LAYOUT)
 
 end
