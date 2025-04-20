@@ -1,4 +1,4 @@
-Stipple.Layout.page(model,[
+join([
     header(class="st-header q-pa-sm", [
         heading("User: {{id}}"),
         h3(class="st-header__title text-h3",

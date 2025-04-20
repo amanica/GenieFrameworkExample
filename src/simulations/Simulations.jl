@@ -12,8 +12,8 @@ Cons:
 """
 
 using ..GenieFrameworkExample # Only needed if you want to access project-wide globals
-using GenieFramework, Stipple, FilePathsBase
-using DataFrames
+using DataFrames, PlotlyBase
+using GenieFramework, Stipple, FilePathsBase, StipplePlotly
 @genietools
 
 @enum ViewMode begin
@@ -41,6 +41,14 @@ function simulationsAsDataFrame()
   end
 end
 
+trace = scatter(
+    x=[1, 2, 3, 4],
+    y=[5, 9, 11, 12],
+    mode="lines+markers",
+    name="Trace",
+    line=attr(color="red")
+)
+
 @app begin
     @out viewMode::ViewMode = LIST
     @in newButton = false
@@ -51,6 +59,21 @@ end
 
     @out tableData = DataTable(simulationsAsDataFrame())
     @in tablefilter = ""
+
+    @out traces = [trace]
+    @out layout = PlotlyBase.Layout(
+      title="A Scatter Plot",
+      xaxis=attr(
+          title="X Axis Label",
+          showgrid=false
+      ),
+      yaxis=attr(
+          title="Y Axis Label",
+          showgrid=true,
+          range=[0, 20]
+      ),
+      height = 680,
+    )
 
     @onbutton listButton listButtonClicked()
     @onbutton newButton newButtonClicked()

@@ -1,5 +1,4 @@
-Stipple.Layout.page(model,
-    [
+join([
 
     ################################################################################
     # This loads everything onto the screen, but conditionally hides it:

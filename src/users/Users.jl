@@ -58,6 +58,7 @@ end
     @onchange id idChanged()
 end
 
+include("view_list.jl")
 include("controller.jl")
 
 @page("/users", p"users/view_list.jl", layout=LAYOUT, post=updateTable)

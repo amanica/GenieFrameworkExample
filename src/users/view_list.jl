@@ -1,5 +1,4 @@
-
-Stipple.Layout.page(model,[
+join([
     header(class="st-header q-pa-sm", [
         heading("Users:"),
         #TODO: show user list

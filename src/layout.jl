@@ -5,7 +5,7 @@ page(model, [
             pre(MODULE_INFO)
         ];
         title = APP_NAME,
-        partial = false,
+        partial = true,
 
         # try to avoid really weird rendering of content until page is loaded
         @if(:isready), #did not seem to help reduce the weird initialization

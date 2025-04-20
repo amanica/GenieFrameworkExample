@@ -12,7 +12,7 @@ end
         p([
             btn("New", class="q-mr-sm", @click(:newButton))
         ]),
-        table(
+        Stipple.table(
             :tableData,
             flat = true,
             bordered = true,
