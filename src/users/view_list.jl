@@ -2,7 +2,7 @@ join([
     moduleToolbar("Users", [
         btn("New", class="q-mr-sm", @click(:newButton))
     ]),
-    table(
+    card(class = "q-ma-sm q-pa-sm", table(
         :tableData,
         flat = true,
         bordered = true,
@@ -21,5 +21,5 @@ join([
                 [template(var"v-slot:append" = true, icon("search"))],
             ),
         ),
-    )
+    ))
 ])

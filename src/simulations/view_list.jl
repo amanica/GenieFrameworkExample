@@ -5,7 +5,7 @@
     moduleToolbar("Simulations", [
         btn("New", class="q-mr-sm", @click(:newButton))
     ]),
-    Stipple.table(
+    card(class = "q-ma-sm q-pa-sm", Stipple.table(
         :tableData,
         flat = true,
         bordered = true,
@@ -24,5 +24,5 @@
                 [template(var"v-slot:append" = true, icon("search"))],
             ),
         ),
-    )
+    ))
 ]
