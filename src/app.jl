@@ -12,7 +12,7 @@ include("users/Users.jl")
 include("simulations/Simulations.jl")
 
 route("/") do
-    serve_static_file("index.html")
+    redirect(:get_simulations)
 end
 
 end
