@@ -12,7 +12,7 @@ Cons:
 """
 
 using ..GenieFrameworkExample # Only needed if you want to access project-wide globals
-using DataFrames, PlotlyBase
+using DataFrames, PlotlyBase, Dates
 using GenieFramework, Stipple, FilePathsBase, StipplePlotly
 @genietools
 
@@ -27,6 +27,8 @@ end
 Stipple.@kwdef mutable struct Simulation
   id::Int
   status::SimulationStatus
+  start::DateTime
+  stop::DateTime
 end
 
 # Fake db
@@ -34,8 +36,8 @@ simulations=Dict{Int, Simulation}()
 
 function simulationsAsDataFrame()
   if !isempty(simulations)
-      data = [(id, simulation.status) for (id, simulation) in simulations]
-      return DataFrame(data, [:id, :status])
+      data = [(id, simulation.status, simulation.start, simulation.stop) for (id, simulation) in simulations]
+      return DataFrame(data, [:id, :status, :start, :stop])
   else
       return DataFrame()
   end
@@ -59,7 +61,8 @@ trace = scatter(
   @in runButton = false
   @in listButton = false
   @out id::Union{Nothing, Int} = nothing
-  @out simulation::Simulation = Simulation(0, INIT)
+  @out simulation::Simulation = Simulation(0, INIT, today() - Day(2), today() - Day(1))
+  @in daterange = DateRange(today() - Day(2), today() - Day(1))
 
   @out tableData = DataTable(simulationsAsDataFrame())
   @in tablefilter = ""

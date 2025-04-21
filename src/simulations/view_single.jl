@@ -14,6 +14,14 @@
                 cell("{{simulation.status}}")
             ]),
             row([
+                cell("Start"),
+                cell("{{simulation.start}}")
+            ]),
+            row([
+                cell("Stop"),
+                cell("{{simulation.stop}}")
+            ]),
+            row([
                 cell("What happens if we add a bit more text?"),
                 cell("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam maximus suscipit nulla sodales feugiat.")
             ]),

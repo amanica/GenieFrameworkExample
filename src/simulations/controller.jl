@@ -29,7 +29,9 @@ end
 
     id = rand(Int8)
     viewMode = SINGLE
-    simulation = Simulation(id, INIT)
+    simulation = Simulation(id, INIT,
+        DateTime(daterange.start),
+        DateTime(daterange.stop))
     simulations[id] = simulation
 
     @async begin
