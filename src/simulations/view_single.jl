@@ -21,10 +21,10 @@
                 cell("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam maximus suscipit nulla sodales feugiat.")
             ]),
         ]),
-        cell(class = "col-12 col-md-8",
+        cell(class = "st-module col-12 col-md-8",
             [StipplePlotly.plot(:traces, layout=:layout, class="sync_data mb-4"
             )]),
-        cell(class = "col-12 col-md-9",
+        cell(class = "col-12 col-md-12",
             [
         "Maecenas venenatis turpis vitae risus commodo aliquam. Suspendisse non quam vel erat viverra gravida. Sed non tincidunt tortor. Aenean fringilla suscipit ex ac hendrerit."])
     ]),
