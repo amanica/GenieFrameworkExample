@@ -3,8 +3,8 @@
         btn("Run another", class="q-mr-sm", @click(:newButton)),
         btn("List", class="q-mr-sm", @click(:listButton))
     ]),
-    row([
-        cell(class = "st-module col-12 col-md-4", [
+    row(class = "q-pa-sm", [
+        cell(class = "shadow-1 q-pa-sm col-12 col-md-4", [
             row([
                 cell("Id"),
                 cell("{{id}}")
@@ -18,7 +18,7 @@
                 cell("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam maximus suscipit nulla sodales feugiat.")
             ]),
         ]),
-        cell(class = "st-module col-12 col-md-8",
+        cell(class = "shadow-1 q-pa-sm col-12 col-md-8",
             [StipplePlotly.plot(:traces, layout=:layout, class="sync_data mb-4"
             )]),
         cell(class = "col-12 col-md-12",
