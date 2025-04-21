@@ -1,9 +1,6 @@
 join([
-    header(class="st-header q-pa-sm", [
-        heading("Add a new user:"),
-        p([
-            btn("Add", class="q-mr-sm", @click(:addButton)),
-            btn("List", class="q-mr-sm", @click(:listButton))
-        ])
-    ])
+    moduleToolbar("Add a new user", [
+        btn("Add", class="q-mr-sm", @click(:addButton)),
+        btn("List", class="q-mr-sm", @click(:listButton))
+    ]),
 ])

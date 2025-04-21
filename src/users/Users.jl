@@ -62,8 +62,8 @@ end
     @onchange id idChanged()
 end
 
-include("view_list.jl")
 include("controller.jl")
+include("../view_common.jl")
 
 # loading from a file so that auto-reloading works:
 @page("/users", p"users/view_list.jl", layout=LAYOUT, post=updateTable)
