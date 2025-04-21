@@ -26,23 +26,35 @@ end
 
 @handler function runButtonClicked()
     @info "runButtonClicked"
-
     id = rand(Int8)
     viewMode = SINGLE
-    simulation = Simulation(id, INIT,
-        DateTime(daterange.start),
-        DateTime(daterange.stop))
+    traces = []
+    simulation = Simulation(id=id,
+        start=DateTime(daterange.start),
+        stop=DateTime(daterange.stop))
     simulations[id] = simulation
 
     @async begin
         @info "Task started"
-        sleep(2)
+        sleep(1)
 
         @info "Task running"
         simulation.status = RUNNING
+        value = abs(randn() * 100)
         @async @push simulation
-
-        sleep(2)
+        for (i, currentDate) in enumerate(simulation.start:Day(1):simulation.stop)
+            value += randn() * 5
+            @show i, currentDate, value
+            push!(simulation.data, (time=currentDate, value=value))
+            traces = [scatter(
+                x=simulation.data[!, :time],
+                y=simulation.data[!, :value],
+                mode="lines+markers",
+                name="Trace",
+                line=attr(color="red")
+            )]
+            sleep(1)
+        end
         @info "Task done"
         @show simulation.status = rand([SUCCESS,FAIL])
         @async @push simulation

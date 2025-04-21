@@ -25,10 +25,11 @@ end
 @enum SimulationStatus INIT RUNNING SUCCESS FAIL
 
 Stipple.@kwdef mutable struct Simulation
-  id::Int
-  status::SimulationStatus
-  start::DateTime
-  stop::DateTime
+  id::Int = 0
+  status::SimulationStatus = INIT
+  start::DateTime = today() - Day(2)
+  stop::DateTime = today() - Day(1)
+  data::DataFrame = DataFrame(time=DateTime[], value=Float64[])
 end
 
 # Fake db
@@ -43,14 +44,6 @@ function simulationsAsDataFrame()
   end
 end
 
-trace = scatter(
-    x=[1, 2, 3, 4],
-    y=[5, 9, 11, 12],
-    mode="lines+markers",
-    name="Trace",
-    line=attr(color="red")
-)
-
 @app begin
   # needed for drawer layout:
   @in left_drawer_open = false
@@ -61,23 +54,24 @@ trace = scatter(
   @in runButton = false
   @in listButton = false
   @out id::Union{Nothing, Int} = nothing
-  @out simulation::Simulation = Simulation(0, INIT, today() - Day(2), today() - Day(1))
+  @out simulation::Simulation = Simulation()
   @in daterange = DateRange(today() - Day(2), today() - Day(1))
 
   @out tableData = DataTable(simulationsAsDataFrame())
   @in tablefilter = ""
 
-  @out traces = [trace]
+  @out traces = []
   @out layout = PlotlyBase.Layout(
     title="A Scatter Plot",
     xaxis=attr(
-        title="X Axis Label",
-        showgrid=false
+        title="Value",
+        showgrid=false,
+        autorange = true
     ),
     yaxis=attr(
-        title="Y Axis Label",
+        title="Time",
         showgrid=true,
-        range=[0, 20]
+        autorange = true
     ),
     height = 680,
   )
