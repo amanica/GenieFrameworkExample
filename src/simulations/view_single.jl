@@ -1,10 +1,7 @@
 [
-    header(class="st-header q-pa-md", [
-        heading("Simulation"),
-        p([
-            btn("Run another", class="q-mr-sm", @click(:newButton)),
-            btn("List", class="q-mr-sm", @click(:listButton))
-        ])
+    moduleToolbar("Simulation", [
+        btn("Run another", class="q-mr-sm", @click(:newButton)),
+        btn("List", class="q-mr-sm", @click(:listButton))
     ]),
     row([
         cell(class = "st-module col-12 col-md-4", [

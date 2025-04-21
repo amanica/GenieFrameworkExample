@@ -1,7 +1,10 @@
 
 page(model,
     StippleUI.layout(view="hHh lpr fff", [
-        quasar(:header, style="background:darkblue", toolbar([
+        quasar(:header,
+            class="custom-header bg-secondary q-pa-none q-ma-none",
+            style="padding: 0; height: 50px;",
+            toolbar([
                 btn(; dense=true, flat=true, round=true, icon="menu", @click("left_drawer_open = !left_drawer_open")),
                 toolbartitle(APP_NAME)
             ])),

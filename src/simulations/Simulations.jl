@@ -87,6 +87,7 @@ trace = scatter(
 end
 
 include("controller.jl") # Note: handlers need to be after @app
+include("../view_common.jl")
 
 # loading from a file so that auto-reloading works:
 @page("/simulations", p"simulations/view.jl", layout=LAYOUT)
