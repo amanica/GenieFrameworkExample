@@ -41,6 +41,10 @@ function usersAsDataFrame()
 end
 
 @app begin
+    # needed for drawer layout:
+    @in left_drawer_open = false
+    @in ministate = true
+
     @out moduleInfo = MODULE_INFO
     @in newButton = false
     @in addButton = false
@@ -61,6 +65,7 @@ end
 include("view_list.jl")
 include("controller.jl")
 
+# loading from a file so that auto-reloading works:
 @page("/users", p"users/view_list.jl", layout=LAYOUT, post=updateTable)
 @page("/users/new", p"users/view_new.jl", layout=LAYOUT)
 @page("/users/:id::Int#([0-9\\-]+)", p"users/view_single.jl", post=updateIdFromUrl, layout=LAYOUT)
