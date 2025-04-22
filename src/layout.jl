@@ -7,9 +7,11 @@ page(model,
                 btn(; dense=true, flat=true, round=true, icon="menu", @click("left_drawer_open = !left_drawer_open")),
                 toolbartitle(APP_NAME)
             ])),
-            drawer(bordered=false, fieldname="left_drawer_open", side="left",
+            drawer(bordered=true, fieldname="left_drawer_open", side="left",
             overlay=false,
-            var":mini"="ministate", var"@mouseover"="ministate = false", var"@mouseout"="ministate = true", var"mini-to-overlay"=true, width=170, breakpoint=200,
+            var":mini"="ministate", var"@mouseover"="ministate = false", var"@mouseout"="ministate = true", var"mini-to-overlay"=true,
+            width=170,
+            # breakpoint=200,
                              list(bordered=true, separator=true,
                                   [
                                    item(href = "/users",
@@ -24,8 +26,7 @@ page(model,
                                         ]),
                                   ]
                                  )),
-        page_container(
-            [
+        page_container([
             @yield
         ]),
         quasar(:footer, class = "q-pa-sm", [

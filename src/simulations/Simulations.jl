@@ -83,12 +83,6 @@ end
   @onchange viewMode, simulation viewModeChanged()
 end
 
-@event :tableclick begin
-  @info ":tableclick"
-  @info event
-  # notify(__model__, "(row, column, value) clicked: (\$(event["row"]), \$(event["column"]), \$(event["value"]))")
-end
-
 include("controller.jl") # Note: handlers need to be after @app
 include("../view_common.jl")
 

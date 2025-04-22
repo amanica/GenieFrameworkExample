@@ -9,7 +9,7 @@ join([
         title = "Users",
         var"row-key" = "id",
         filter = :tablefilter,
-        hideheader = "",
+        # hideheader = "",
         template(
             var"v-slot:top-right" = "",
             textfield(

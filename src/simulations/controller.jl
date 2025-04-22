@@ -15,6 +15,19 @@ end
     end
 end
 
+@event :table_row_clicked begin
+  @info ":table_row_clicked"
+  selectedSimulationId = event["row_data"]["id"]
+  @info "Selected simulation: $selectedSimulationId"
+
+  if !haskey(simulations, selectedSimulationId)
+    @run notifyError("Unknown simulation id: $selectedSimulationId")
+  else
+    simulation = simulations[selectedSimulationId]
+    viewMode = SINGLE
+  end
+end
+
 
 # I'm not sure much is gained by specifying the relevant
 # reactive variables, I'm guessing it will just do a tiny bit less work..

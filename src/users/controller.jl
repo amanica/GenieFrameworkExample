@@ -1,8 +1,6 @@
 include("../controller_common.jl")
 
-function jsredirect(path)
-    return """window.location.href = '$path'"""
-end
+
 
 @handler function listButtonClicked()
     @info "listButtonClicked"
