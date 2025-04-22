@@ -76,6 +76,11 @@ end
     height = 680,
   )
 
+  @event :simulation_tableclicked begin
+    @info "event"
+    # notify(__model__, "(row, column, value) clicked: (\$(event["row"]), \$(event["column"]), \$(event["value"]))")
+  end
+
   @onbutton listButton listButtonClicked()
   @onbutton newButton newButtonClicked()
   @onbutton runButton runButtonClicked()
