@@ -9,7 +9,7 @@ page(model,
             ])),
             drawer(bordered=false, fieldname="left_drawer_open", side="left",
             overlay=false,
-            var":mini"="ministate", var"@mouseover"="ministate = false", var"@mouseout"="ministate = true", var"mini-to-overlay"=true, width="170", breakpoint=200,
+            var":mini"="ministate", var"@mouseover"="ministate = false", var"@mouseout"="ministate = true", var"mini-to-overlay"=true, width=170, breakpoint=200,
                              list(bordered=true, separator=true,
                                   [
                                    item(href = "/users",
@@ -28,7 +28,7 @@ page(model,
             [
             @yield
         ]),
-        quasar(:footer, [
+        quasar(:footer, class = "q-pa-sm", [
             pre(MODULE_INFO)
         ])
     ]);
