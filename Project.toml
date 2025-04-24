@@ -1,3 +1,6 @@
+name = "GenieFrameworkExample"
+uuid = "203fd0ee-fd63-4e81-bff7-405ddf8f74c0"
+
 [deps]
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 FilePathsBase = "48062228-2e41-5def-b9a4-89aafe57970f"

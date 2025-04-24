@@ -10,13 +10,13 @@ is_debug_mode = contains(loaded_modules_str, "VSCodeDebugger")
 
 using Genie
 @show Genie.config.run_as_server = is_debug_mode
-
-configPath = joinpath(@__DIR__, "config")
+basedir = @__DIR__
+configPath = joinpath(basedir, "config")
 Genie.Configuration.config!(;
     path_config=configPath,
     path_env=joinpath(configPath, "env"),
     path_initializers=joinpath(configPath, "initializers"),
-    path_build=joinpath(@__DIR__, "../build"),
+    path_build=joinpath(basedir, "../build"),
     app_env="dev"
 )
 
