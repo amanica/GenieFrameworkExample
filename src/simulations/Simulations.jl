@@ -14,6 +14,7 @@ Cons:
 using ..GenieFrameworkExample # Only needed if you want to access project-wide globals
 using DataFrames, PlotlyBase, Dates
 using GenieFramework, Stipple, FilePathsBase, StipplePlotly
+using SearchLight, SearchLightSQLite
 @genietools
 
 @enum ViewMode begin
@@ -24,7 +25,7 @@ end
 
 @enum SimulationStatus INIT RUNNING SUCCESS FAIL
 
-Stipple.@kwdef mutable struct Simulation
+Stipple.@kwdef mutable struct SimulationViewModel
   id::Int = 0
   status::SimulationStatus = INIT
   start::DateTime = today() - Day(2)
@@ -33,7 +34,7 @@ Stipple.@kwdef mutable struct Simulation
 end
 
 # Fake db
-simulations=Dict{Int, Simulation}()
+simulations=Dict{Int, SimulationViewModel}()
 
 function simulationsAsDataFrame()
   if !isempty(simulations)
@@ -54,7 +55,7 @@ end
   @in runButton = false
   @in listButton = false
   @out id::Union{Nothing, Int} = nothing
-  @out simulation::Simulation = Simulation()
+  @out simulation::SimulationViewModel = SimulationViewModel()
   @in daterange = DateRange(today() - Day(2), today() - Day(1))
 
   @out tableData = DataTable(simulationsAsDataFrame())
@@ -90,3 +91,5 @@ include("../view_common.jl")
 @page("/simulations", p"simulations/view.jl", layout=LAYOUT)
 
 end
+
+

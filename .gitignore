@@ -1,3 +1,5 @@
 Manifest.toml
 *.log
 **/.theme
+src/build
+src/db/example.sqlite

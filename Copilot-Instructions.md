@@ -57,4 +57,5 @@
 
 ---
 
-For more details, refer to the [Genie Framework Documentation](https://learn.genieframework.com/framework/stipple.jl/docs).
+For more details, refer to the [Genie Framework Documentation](https://learn.genieframework.com/framework)
+and [Genie Framework on Github](https://github.com/GenieFramework)

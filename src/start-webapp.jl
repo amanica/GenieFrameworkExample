@@ -11,7 +11,18 @@ is_debug_mode = contains(loaded_modules_str, "VSCodeDebugger")
 using Genie
 @show Genie.config.run_as_server = is_debug_mode
 
-Genie.loadapp()
+configPath = joinpath(@__DIR__, "config")
+Genie.Configuration.config!(;
+    path_config=configPath,
+    path_env=joinpath(configPath, "env"),
+    path_initializers=joinpath(configPath, "initializers"),
+    path_build=joinpath(@__DIR__, "../build"),
+    app_env="dev"
+)
+
+# Genie.loadapp()
+include("GenieFrameworkExample.jl")
+
 Genie.isrunning() && down()
 up()
 

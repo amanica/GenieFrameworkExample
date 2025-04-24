@@ -42,7 +42,7 @@ end
     id = rand(Int8)
     viewMode = SINGLE
     traces = []
-    simulation = Simulation(id=id,
+    simulation = SimulationViewModel(id=id,
         start=DateTime(daterange.start),
         stop=DateTime(daterange.stop))
     simulations[id] = simulation
