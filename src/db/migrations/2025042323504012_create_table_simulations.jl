@@ -5,15 +5,12 @@ import SearchLight.Migrations: create_table, column, columns, pk, add_index, dro
 function up()
   create_table(:simulations) do
     [
-      primary_key()
-      column(:status, :string, limit = 10)
-      column(:start, :datetime)
-      column(:stop, :datetime)
+      pk(:id)
+      column(:status, :string, limit = 10, not_null = true)
+      column(:start, :datetime, not_null = true)
+      column(:stop, :datetime, not_null = true)
     ]
   end
-
-  # add_index(:simulations, :column_name)
-  # add_indices(:simulations, :column_name_1, :column_name_2)
 end
 
 function down()

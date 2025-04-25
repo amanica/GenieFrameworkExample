@@ -16,4 +16,4 @@ try
 catch e
   # @error "Could not init migration: $e"
 end
-# SearchLight.Migrations.up()
+SearchLight.Migrations.up()
