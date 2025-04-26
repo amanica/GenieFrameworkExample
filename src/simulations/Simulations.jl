@@ -16,6 +16,7 @@ using DataFrames, PlotlyBase, Dates
 using GenieFramework, Stipple, FilePathsBase, StipplePlotly
 using SearchLight, SearchLightSQLite
 using ..GenieFrameworkExample.SimulationsDB
+using ..GenieFrameworkExample.SimulationDataDB
 @genietools
 
 @enum ViewMode begin

@@ -7,6 +7,7 @@ using Dates
 export SimulationData
 
 @kwdef mutable struct SimulationData <: AbstractModel
+  id::DbId = DbId()
   simulation_id::DbId
   date::DateTime
   value::Float64

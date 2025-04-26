@@ -1,5 +1,8 @@
 using Genie, SearchLight, SearchLightSQLite
 
+using Inflector
+push!(Inflector.IRREGULAR_NOUNS, ("simulationdata", "simulationdata"))
+
 function Genie.Renderer.Json.JSON3.StructTypes.StructType(::Type{T}) where {T<:SearchLight.AbstractModel}
   Genie.Renderer.Json.JSON3.StructTypes.Struct()
 end

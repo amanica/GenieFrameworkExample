@@ -51,12 +51,10 @@ end
 
 @handler function runButtonClicked()
     @info "runButtonClicked"
-    # id = rand(Int8)
     viewMode = SINGLE
     traces = []
 
     simulation = Simulation(
-        # id=DbId(id),
         start=DateTime(daterange.start),
         stop=DateTime(daterange.stop)
     )
@@ -69,10 +67,11 @@ end
 
             @info "Task running"
             setStatus(simulation, SimulationsDB.RUNNING)
-            simulation = SearchLight.save!(simulation) # get id back
+            saved_simulation = SearchLight.save!(simulation) # get id back
+            simulation.id = saved_simulation.id #not assigning directly as reactive ui freaks out
+            @async @push simulation
             value = abs(randn() * 100)
             data::DataFrame = DataFrame(time=DateTime[], value=Float64[])
-            @async @push simulation
             for (i, currentDate) in enumerate(simulation.start:Day(1):simulation.stop)
                 value += randn() * 5
                 @show i, currentDate, value
@@ -87,16 +86,31 @@ end
                 sleep(1)
             end
             @info "Task done"
-            setStatus(simulation, rand([SimulationsDB.SUCCESS, SimulationsDB.FAIL]))
+            #setStatus(simulation[], rand([SimulationsDB.SUCCESS, SimulationsDB.FAIL])) #not sure why things freak out if I use a method
+            simulation.status = string(rand([SimulationsDB.SUCCESS, SimulationsDB.FAIL]))
             @async @push simulation
+
             SearchLight.save(simulation)
-            # TODO: save simulation data
+            if simulation.status == string(SimulationsDB.SUCCESS)
+                @info "Saving simulation data"
+                for row in eachrow(data)
+                    sim_data = SimulationData(
+                        simulation_id=simulation.id,
+                        date=row[:time],
+                        value=row[:value]
+                    )
+                    SearchLight.save(sim_data)
+                end
+            end
             @info "Task ended"
         catch e
+            trace=Base.catch_backtrace()
+            show(stdout, MIME"text/plain"(), stacktrace(trace))
             @error "Task failed: $e"
-            setStatus(simulation, SimulationsDB.FAIL)
-            SearchLight.save(simulation)
+            # setStatus(simulation, SimulationsDB.FAIL)
+            simulation.status = string(SimulationsDB.FAIL)
             @async @push simulation
+            SearchLight.save(simulation)
         end
     end
 end

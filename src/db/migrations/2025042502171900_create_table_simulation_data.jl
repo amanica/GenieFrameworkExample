@@ -2,10 +2,10 @@ module CreateTableSimulationData
 
 import SearchLight.Migrations: create_table, column, columns, pk, add_index, drop_table, add_indices, constraint
 
-@info "Creating table simulation_data"
+@info "Creating table simulationdata"
 
 function up()
-  create_table(:simulation_data) do
+  create_table(:simulationdata) do
     [
       pk(:id)
       column(:simulation_id, :int
@@ -18,11 +18,11 @@ function up()
 
   # huh, this seems to add 2 indexes instead of
   # a multi-column index
-  add_indices(:simulation_data, :simulation_id, :date)
+  add_indices(:simulationdata, :simulation_id, :date)
 end
 
 function down()
-  drop_table(:simulation_data)
+  drop_table(:simulationdata)
 end
 
 end
