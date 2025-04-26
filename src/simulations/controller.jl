@@ -83,7 +83,7 @@ end
             sleep(1)
 
             @info "Task running"
-            setStatus(simulation, SimulationsDB.RUNNING)
+            simulation.status = SimulationsDB.RUNNING
             saved_simulation = SearchLight.save!(simulation) # get id back
             simulation.id = saved_simulation.id #not assigning directly as reactive ui freaks out
             @async @push simulation
@@ -103,12 +103,11 @@ end
                 sleep(1)
             end
             @info "Task done"
-            #setStatus(simulation[], rand([SimulationsDB.SUCCESS, SimulationsDB.FAIL])) #not sure why things freak out if I use a method
-            simulation.status = string(rand([SimulationsDB.SUCCESS, SimulationsDB.FAIL]))
+            simulation.status = rand([SimulationsDB.SUCCESS, SimulationsDB.FAIL])
             @async @push simulation
 
             SearchLight.save(simulation)
-            if simulation.status == string(SimulationsDB.SUCCESS)
+            if simulation.status == SimulationsDB.SUCCESS
                 @info "Saving simulation data"
                 for row in eachrow(data)
                     sim_data = SimulationData(
@@ -124,8 +123,7 @@ end
             trace=Base.catch_backtrace()
             @error "Task failed: $e"
             show(stdout, MIME"text/plain"(), stacktrace(trace))
-            # setStatus(simulation, SimulationsDB.FAIL)
-            simulation.status = string(SimulationsDB.FAIL)
+            simulation.status = SimulationsDB.FAIL
             @async @push simulation
             SearchLight.save(simulation)
         end
