@@ -8,6 +8,15 @@ function Genie.Renderer.Json.JSON3.StructTypes.StructType(::Type{SearchLight.DbI
   Genie.Renderer.Json.JSON3.StructTypes.Struct()
 end
 
+function Base.convert(::Type{DateTime}, value::AbstractString)
+  try
+    return DateTime(value, "yyyy-mm-ddTHH:MM:SS")
+  catch e
+    @error "Failed to convert string to DateTime: $value" exception=e
+    rethrow(e)
+  end
+end
+
 @info "Loading SearchLight configuration"
 SearchLight.Configuration.load(joinpath(pwd(), "db/connection.yml"))
 @show CONNECTION = SearchLight.connect()
@@ -16,4 +25,4 @@ try
 catch e
   # @error "Could not init migration: $e"
 end
-SearchLight.Migrations.up()
+SearchLight.Migrations.allup()

@@ -15,6 +15,7 @@ using ..GenieFrameworkExample # Only needed if you want to access project-wide g
 using DataFrames, PlotlyBase, Dates
 using GenieFramework, Stipple, FilePathsBase, StipplePlotly
 using SearchLight, SearchLightSQLite
+using ..GenieFrameworkExample.SimulationsDB
 @genietools
 
 @enum ViewMode begin
@@ -23,25 +24,13 @@ using SearchLight, SearchLightSQLite
     SINGLE
 end
 
-@enum SimulationStatus INIT RUNNING SUCCESS FAIL
-
-Stipple.@kwdef mutable struct SimulationViewModel
-  id::Int = 0
-  status::SimulationStatus = INIT
-  start::DateTime = today() - Day(2)
-  stop::DateTime = today() - Day(1)
-  data::DataFrame = DataFrame(time=DateTime[], value=Float64[])
-end
-
-# Fake db
-simulations=Dict{Int, SimulationViewModel}()
-
 function simulationsAsDataFrame()
+  simulations = SearchLight.find(Simulation)
   if !isempty(simulations)
-      data = [(id, simulation.status, simulation.start, simulation.stop) for (id, simulation) in simulations]
-      return DataFrame(data, [:id, :status, :start, :stop])
+    data = [(sim.id.value, sim.status, sim.start, sim.stop) for sim in simulations]
+    return DataFrame(data, [:id, :status, :start, :stop])
   else
-      return DataFrame()
+    return DataFrame()
   end
 end
 
@@ -54,8 +43,7 @@ end
   @in newButton = false
   @in runButton = false
   @in listButton = false
-  @out id::Union{Nothing, Int} = nothing
-  @out simulation::SimulationViewModel = SimulationViewModel()
+  @out simulation::Union{Nothing,Simulation} = Simulation()
   @in daterange = DateRange(today() - Day(2), today() - Day(1))
 
   @out tableData = DataTable(simulationsAsDataFrame())

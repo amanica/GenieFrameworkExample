@@ -1,7 +1,8 @@
-module SimulationData
+module SimulationDataDB
 
 import SearchLight: AbstractModel, DbId
 import Base: @kwdef
+using Dates
 
 export SimulationData
 

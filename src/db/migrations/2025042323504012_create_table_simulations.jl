@@ -2,6 +2,8 @@ module CreateTableSimulations
 
 import SearchLight.Migrations: create_table, column, columns, pk, add_index, drop_table, add_indices
 
+@info "Creating table simulation"
+
 function up()
   create_table(:simulations) do
     [

@@ -7,7 +7,7 @@
         card(class = "q-pa-sm col-12 col-md-4", [
             row([
                 cell("Id"),
-                cell("{{id}}")
+                cell("{{simulation.id.value}}")
             ]),
             row([
                 cell("Status"),
