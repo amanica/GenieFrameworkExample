@@ -21,8 +21,8 @@ end
     selectedSimulationId = event["row_data"]["id"]
     @info "Selected simulation: $selectedSimulationId"
 
-    @show whereclause = SQLWhereExpression("id = ?", selectedSimulationId)
-    @show simulations = SearchLight.find(Simulation, whereclause)
+    whereclause = SQLWhereExpression("id = ?", selectedSimulationId)
+    simulations = SearchLight.find(Simulation, whereclause)
     if isempty(simulations)
         @run notifyError("Unknown simulation id: $selectedSimulationId")
     else
@@ -37,7 +37,6 @@ end
         if isempty(simulation_data)
             traces = []
         else
-            @show simulation_data
             data = DataFrame(time=[row.datetime for row in simulation_data], value=[row.value for row in simulation_data])
             traces = [scatter(
                 x=data[!, :time],
@@ -92,7 +91,7 @@ end
             data::DataFrame = DataFrame(time=DateTime[], value=Float64[])
             for (i, currentDate) in enumerate(simulation.start:Day(1):simulation.stop)
                 value += randn() * 5
-                @show i, currentDate, value
+                #@show i, currentDate, value
                 push!(data, (time=currentDate, value=value))
                 traces = [scatter(
                     x=data[!, :time],
