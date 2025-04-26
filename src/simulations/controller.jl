@@ -30,12 +30,30 @@ end
         viewMode = SINGLE
         simulation = simulations[1]
 
-        # TODO: load simulation data
+        # Load simulation data
+        sim_data_whereclause = SQLWhereExpression("simulation_id = ?", selectedSimulationId)
+        simulation_data = SearchLight.find(SimulationData, sim_data_whereclause)
+
+        if isempty(simulation_data)
+            traces = []
+        else
+            @show simulation_data
+            data = DataFrame(time=[row.datetime for row in simulation_data], value=[row.value for row in simulation_data])
+            traces = [scatter(
+                x=data[!, :time],
+                y=data[!, :value],
+                mode="lines+markers",
+                name="Trace",
+                line=attr(color="red")
+            )]
+        end
+
+        @async @push traces
     end
   catch e
     trace=Base.catch_backtrace()
-    show(stdout, MIME"text/plain"(), stacktrace(trace))
     @error "Error loading simulation: $e"
+    show(stdout, MIME"text/plain"(), stacktrace(trace))
     @run notifyError("Error loading simulation: $selectedSimulationId")
   end
 end
@@ -96,7 +114,7 @@ end
                 for row in eachrow(data)
                     sim_data = SimulationData(
                         simulation_id=simulation.id,
-                        date=row[:time],
+                        datetime=row[:time],
                         value=row[:value]
                     )
                     SearchLight.save(sim_data)
@@ -105,8 +123,8 @@ end
             @info "Task ended"
         catch e
             trace=Base.catch_backtrace()
-            show(stdout, MIME"text/plain"(), stacktrace(trace))
             @error "Task failed: $e"
+            show(stdout, MIME"text/plain"(), stacktrace(trace))
             # setStatus(simulation, SimulationsDB.FAIL)
             simulation.status = string(SimulationsDB.FAIL)
             @async @push simulation

@@ -11,14 +11,14 @@ function up()
       column(:simulation_id, :int
         # , constraint(:simulations, :id)
       )
-      column(:date, :datetime, not_null = true)
+      column(:datetime, :datetime, not_null = true)
       column(:value, :float, not_null = true)
     ]
   end
 
   # huh, this seems to add 2 indexes instead of
   # a multi-column index
-  add_indices(:simulationdata, :simulation_id, :date)
+  add_indices(:simulationdata, :simulation_id, :datetime)
 end
 
 function down()

@@ -8,9 +8,9 @@ export SimulationData
 
 @kwdef mutable struct SimulationData <: AbstractModel
   id::DbId = DbId()
-  simulation_id::DbId
-  date::DateTime
-  value::Float64
+  simulation_id::DbId = DbId()
+  datetime::DateTime = now()
+  value::Float64 = 0.0
 end
 
 end

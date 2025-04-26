@@ -54,12 +54,12 @@ end
   @out layout = PlotlyBase.Layout(
     title="A Scatter Plot",
     xaxis=attr(
-        title="Value",
+        title="Time",
         showgrid=false,
         autorange = true
     ),
     yaxis=attr(
-        title="Time",
+        title="Value",
         showgrid=true,
         autorange = true
     ),
