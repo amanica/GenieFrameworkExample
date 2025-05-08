@@ -29,6 +29,13 @@ end
         @info "Loaded simulation: $simulation"
         viewMode = SINGLE
         simulation = simulations[1]
+        if simulation.status == SimulationsDB.SUCCESS
+            simulation_progressPercent = 100
+            simulation_progress = 1
+        else
+            simulation_progressPercent = 0
+            simulation_progress = 0
+        end
 
         # Load simulation data
         sim_data_whereclause = SQLWhereExpression("simulation_id = ?", selectedSimulationId)
@@ -68,6 +75,8 @@ end
 
 @handler function runButtonClicked()
     @info "runButtonClicked"
+    simulation_progressPercent = 0
+    simulation_progress = 0
     viewMode = SINGLE
     traces = []
 
@@ -89,7 +98,9 @@ end
             @async @push simulation
             value = abs(randn() * 100)
             data::DataFrame = DataFrame(time=DateTime[], value=Float64[])
-            for (i, currentDate) in enumerate(simulation.start:Day(1):simulation.stop)
+            dateRange = simulation.start:Day(1):simulation.stop
+            iPercFactor = 100. / length(dateRange)
+            for (i, currentDate) in enumerate(dateRange)
                 value += randn() * 5
                 #@show i, currentDate, value
                 push!(data, (time=currentDate, value=value))
@@ -100,6 +111,8 @@ end
                     name="Trace",
                     line=attr(color="red")
                 )]
+                simulation_progressPercent = i * iPercFactor
+                simulation_progress = simulation_progressPercent / 100.0
                 sleep(1)
             end
             @info "Task done"
@@ -108,6 +121,7 @@ end
 
             SearchLight.save(simulation)
             if simulation.status == SimulationsDB.SUCCESS
+                simulation_progressPercent = 100
                 @info "Saving simulation data"
                 for row in eachrow(data)
                     sim_data = SimulationData(

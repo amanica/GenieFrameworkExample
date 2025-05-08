@@ -45,6 +45,8 @@ end
   @in runButton = false
   @in listButton = false
   @out simulation::Union{Nothing,Simulation} = Simulation()
+  @out simulation_progress::Float16 = 0
+  @out simulation_progressPercent::Float16 = 0
   @in daterange = DateRange(today() - Day(2), today() - Day(1))
 
   @out tableData = DataTable(simulationsAsDataFrame())

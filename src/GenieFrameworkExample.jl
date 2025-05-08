@@ -2,7 +2,7 @@ module GenieFrameworkExample
 
 export APP_NAME, LAYOUT
 
-using GenieFramework, Stipple, FilePathsBase, Revise
+using GenieFramework, Stipple, FilePathsBase
 @genietools
 
 const APP_NAME = "An example GenieFramework project"
