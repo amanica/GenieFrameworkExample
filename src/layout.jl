@@ -8,9 +8,9 @@ page(model,
                 toolbartitle(APP_NAME)
             ])),
             drawer(bordered=true, fieldname="left_drawer_open", side="left",
-            overlay=false,
-            var":mini"="ministate", var"@mouseover"="ministate = false", var"@mouseout"="ministate = true", var"mini-to-overlay"=true,
-            width=170, # this causes a warning:
+            overlay = false,
+            var":mini" = "ministate", var"@mouseover"="ministate = false", var"@mouseout"="ministate = true", var"mini-to-overlay"=true,
+            width! = 170, # need the ! else this causes a warning:
             #vue.global.js:1612 [Vue warn]: Invalid prop: type check failed for prop "width". Expected Number with value 170, got String with value "170".
             # breakpoint=200,
                              list(bordered=true, separator=true,

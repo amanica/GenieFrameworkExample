@@ -28,26 +28,23 @@
             row(class = "q-pa-xs", [
                 cell("Progress Badge"),
                 cell([
-                    # this is not working :'(
-                    # badge(
-                    #     "{{simulation_progress*100}}%",
-                    #     transparent=true
-                    # ),
-                    quasar(:badge,
-                        htmldiv("{{simulation_progress*100}}%"),
-                        transparent=true,
+                    badge(
+                        "", # not sure why but this is needed to get the interpolation working..
+                        "{{simulation_progressPercent}}%",
+                        transparent=true
                     ),
                 ])
             ]),
             row(class = "q-pa-xs", [
                 cell("Progress Knob"),
                 cell([
-                    knob(0:1:100, :simulation_progressPercent,
-                        "{{simulation_progress*100}}%",
+                    knob(0:1:100,
+                        :simulation_progressPercent,
+                        "{{simulation_progressPercent}}%",
                         class="text-light-blue",
                         color = "primary",
                         track__color = "grey-3",
-                        thickness=0.33, # this causes a warning:
+                        thickness! = 0.33, # need the ! else I get this causes a warning:
                         #vue.global.js:1612 [Vue warn]: Invalid prop: type check failed for prop "thickness". Expected Number with value 0.33, got String with value "0.33".
                         show__value=true,
                         readonly=true,
@@ -59,14 +56,14 @@
                 cell([
                     quasar(:linear__progress,
                         cell(
-                            quasar(:badge,
-                                htmldiv("{{simulation_progress*100}}%"),
-                                transparent=true,
+                            badge(
+                                "", # not sure why but this is needed to get the interpolation working..
+                                "{{simulation_progressPercent}}%",
+                                transparent=true
                             ),
                             class = "absolute-full flex flex-center"
                         ),
-                        value=:simulation_progress,
-                        # value=:simulation_progressPercent/100.0, # this is not working :'(
+                        value=@jsexpr(:simulation_progressPercent/100.0),
                         size="25px",
                         stripe=true,
                         rounded=true,

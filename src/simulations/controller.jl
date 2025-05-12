@@ -31,10 +31,8 @@ end
         simulation = simulations[1]
         if simulation.status == SimulationsDB.SUCCESS
             simulation_progressPercent = 100
-            simulation_progress = 1
         else
             simulation_progressPercent = 0
-            simulation_progress = 0
         end
 
         # Load simulation data
@@ -76,7 +74,6 @@ end
 @handler function runButtonClicked()
     @info "runButtonClicked"
     simulation_progressPercent = 0
-    simulation_progress = 0
     viewMode = SINGLE
     traces = []
 
@@ -112,7 +109,6 @@ end
                     line=attr(color="red")
                 )]
                 simulation_progressPercent = i * iPercFactor
-                simulation_progress = simulation_progressPercent / 100.0
                 sleep(1)
             end
             @info "Task done"
