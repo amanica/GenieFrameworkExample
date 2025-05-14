@@ -11,7 +11,14 @@
             ]),
             row(class = "q-pa-xs", [
                 cell("Status"),
-                cell("{{simulation.status}}")
+                cell([
+                    badge(
+                        "",
+                        "{{simulation.status}}",
+                        color=R"simulation.status == 'INIT' ? 'primary' : simulation.status == 'SUCCESS' ? 'positive' : simulation.status == 'FAIL' ? 'negative' : 'info'",
+                        transparent=true
+                    )
+                ]),
             ]),
             row(class = "q-pa-xs", [
                 cell("Start"),
