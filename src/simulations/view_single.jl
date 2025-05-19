@@ -15,7 +15,7 @@
                     badge(
                         "",
                         "{{simulation.status}}",
-                        color=R"simulation.status == 'INIT' ? 'primary' : simulation.status == 'SUCCESS' ? 'positive' : simulation.status == 'FAIL' ? 'negative' : 'info'",
+                        color=R"simulation.status == 'INIT' ? 'primary' : simulation.status == 'RUNNING' ? 'accent' : simulation.status == 'SUCCESS' ? 'positive' : simulation.status == 'FAIL' ? 'negative' : 'info'",
                         transparent=true
                     )
                 ]),
