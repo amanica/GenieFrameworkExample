@@ -56,3 +56,28 @@ end
     @async @push tableData
     return nothing
 end
+
+# @event :user_row_clicked begin
+#   @info ":user_row_clicked"
+#   try
+#     selectedUserId = event["row_data"]["id"]
+#     @info "Selected user: $selectedUserId"
+
+#     whereclause = SQLWhereExpression("id = ?", selectedUserId)
+#     users = SearchLight.find(User, whereclause)
+#     if isempty(users)
+#         @run notifyError("Unknown user id: $selectedUserId")
+#     else
+#         @info "Loaded user: $user"
+#         viewMode = SINGLE
+#         user = users[1]
+
+#         # Additional user-specific logic can go here
+#     end
+#   catch e
+#     trace=Base.catch_backtrace()
+#     @error "Error loading user: $e"
+#     show(stdout, MIME"text/plain"(), stacktrace(trace))
+#     @run notifyError("Error loading user: $selectedUserId")
+#   end
+# end
