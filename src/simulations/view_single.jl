@@ -79,7 +79,7 @@
             ]),
         ]),
         card(class = "q-pa-sm col-12 col-md-8",
-            [StipplePlotly.plot(:traces, layout=:layout, class="sync_data mb-4"
+            [StipplePlotly.plot(:plotTraces, layout=:plotlayout, class="sync_data mb-4"
             )]),
         cell(class = "col-12 col-md-12",
             [

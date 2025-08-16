@@ -12,8 +12,9 @@ Cons:
 """
 
 using ..GenieFrameworkExample # Only needed if you want to access project-wide globals
-using DataFrames, PlotlyBase, Dates
-using GenieFramework, Stipple, FilePathsBase, StipplePlotly
+using DataFrames, Dates
+using GenieFramework, Stipple, FilePathsBase
+using PlotlyBase, StipplePlotly
 using SearchLight, SearchLightSQLite
 using ..GenieFrameworkExample.SimulationsDB
 using ..GenieFrameworkExample.SimulationDataDB
@@ -51,8 +52,8 @@ end
   @out tableData = DataTable(simulationsAsDataFrame())
   @in tablefilter = ""
 
-  @out traces = []
-  @out layout = PlotlyBase.Layout(
+  @out plotTraces = []
+  @out plotlayout = PlotlyBase.Layout(
     title="A Scatter Plot",
     xaxis=attr(
         title="Time",
