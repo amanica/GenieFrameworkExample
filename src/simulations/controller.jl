@@ -40,10 +40,10 @@ end
         simulation_data = SearchLight.find(SimulationData, sim_data_whereclause)
 
         if isempty(simulation_data)
-            plotTraces = []
+            plot.data = []
         else
             data = DataFrame(time=[row.datetime for row in simulation_data], value=[row.value for row in simulation_data])
-            plotTraces = [scatter(
+            plot.data = [scatter(
                 x=data[!, :time],
                 y=data[!, :value],
                 mode="lines+markers",
@@ -51,8 +51,6 @@ end
                 line=attr(color="red")
             )]
         end
-
-        @async @push plotTraces
     end
   catch e
     trace=Base.catch_backtrace()
@@ -70,12 +68,10 @@ end
     viewMode = NEW
 end
 
-
 @handler function runButtonClicked()
     @info "runButtonClicked"
     simulation_progressPercent = 0
     viewMode = SINGLE
-    plotTraces = []
 
     simulation = Simulation(
         start=DateTime(daterange.start),
@@ -101,13 +97,16 @@ end
                 value += randn() * 5
                 #@show i, currentDate, value
                 push!(data, (time=currentDate, value=value))
-                plotTraces = [scatter(
-                    x=data[!, :time],
-                    y=data[!, :value],
-                    mode="lines+markers",
-                    name="Trace",
-                    line=attr(color="red")
-                )]
+
+                plot.data = [    scatter(
+                        x=data[!, :time],
+                        y=data[!, :value],
+                        mode="lines+markers",
+                        name="Trace",
+                        line=attr(color="red")
+                    )
+                ]
+
                 simulation_progressPercent = i * iPercFactor
                 sleep(1)
             end
